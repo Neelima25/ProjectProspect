@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+    <link rel="stylesheet" media="screen" href="/stylesheets/main.css">
+    <link rel="shortcut icon" type="image/png" href="/images/favicon.png">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" rel="stylesheet"/>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+
+    <script src="/js/analysis.service.js"></script>
+
+    <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+    <script type="text/javascript">
+
+        google.load("visualization", "1", {packages: ["corechart", "table"]});
+
+        google.setOnLoadCallback(function () {
+
+            function drawChart(data) {
+                var options = {
+                    title: 'B & I Analysis Result',
+                    pieHole: 0.4
+                };
+                var chart = new google.visualization.PieChart(document.getElementById('piechart'));
+                chart.draw(data, options);
+            }
+
+            function drawTable(data) {
+                var table = new google.visualization.Table(document.getElementById('table_div'));
+                table.draw(data, {width: '90%', height: '100%'});
+            }
+
+            Analysis.getBIAnalysis(
+                function success(result) {
+                    var rows = [];
+
+                    var patients = result.patients;
+                    for (var key in patients) {
+                        if (patients.hasOwnProperty(key)) {
+                            rows.push([result.patientTypeNameMap[key], patients[key]])
+                        }
+                    }
+
+                    var data = new google.visualization.DataTable();
+                    data.addColumn('string', 'Patient Type');
+                    data.addColumn('number', 'Count');
+                    data.addRows(rows);
+
+                    drawChart(data);
+                    drawTable(data);
+                },
+                function failure() {
+                    toastr.error('Oops, failed to load analysis result.');
+                }
+            );
+        });
+
+
+    </script>
+</head>
+<body>
+<p>
+    <img src="images/cat.png" height="42" width="42">
+    <span class="greeting">O Hai,</span>
+    <span class="sub-greeting">according to your calculations... </span>
+</p>
+<div id="table_div"></div>
+<p>
+    <img src="images/cat.png" height="42" width="42">
+    <span class="greeting">Here,</span>
+    <span class="sub-greeting">have a donut...</span>
+</p>
+<div id="piechart"></div>
+</body>
+</html>
