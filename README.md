@@ -67,9 +67,9 @@ Zip up the directory and send it to us.
     4. elseif ((currentDay - previousDay) < (B? 30: 90))     
        then increment violationCount.
        Do this process step-4 till end of sequence
-    5. if(VC==0) - Not violated
-       elseif(VC==1) - switched
-       elseif(VC==2) - Trial
-       elseif(VC>2) - Violated
+    5. 1. if(VC==0) - Not violated
+       2. elseif(VC==1) - switched
+       3. elseif(VC==2) - Trial
+       4. elseif(VC>2) - Violated
 6. Finally we will have the category of the patients. 
     
