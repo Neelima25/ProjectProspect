@@ -53,3 +53,23 @@ You can run the tests with `./gradlew test`. at first, BIAnalysisServiceTest is 
 ## Submission
 
 Zip up the directory and send it to us.
+
+## Approach
+
+1. Read the data.csv
+2. Get all the patient IDs and remove duplicates and store in an array
+3. Gather all patient's records per patient from data.csv
+4. Iterate through patients array  and pass patient's records to the categorize function.
+5. Categorize fuction steps:
+    1. Sort by day.
+    2. Suppose on 0 day current medicine is 'B'
+    3. Goto next day (if medicine on next day is same as current day repeat step-3)
+    4. elseif ((currentDay - previousDay) < (B? 30: 90))     
+       then increment violationCount.
+       Do this process step-4 till end of sequence
+    5. if(VC==0) - Not violated
+       elseif(VC==1) - switched
+       elseif(VC==2) - Trial
+       elseif(VC>2) - Violated
+6. Finally we will have the category of the patients. 
+    
