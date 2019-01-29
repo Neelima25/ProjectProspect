@@ -6,7 +6,10 @@ import com.prospection.coding.assignment.domain.PurchaseRecord;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import static com.prospection.coding.assignment.domain.AnalysisResult.PatientType.*;
 
@@ -23,6 +26,20 @@ public class BIAnalysisService {
     public AnalysisResult performBIAnalysis() throws Exception {
         List<PurchaseRecord> purchaseRecords = purchaseRecordDAO.allPurchaseRecords();
         // do some processing here
+
+        Map<Integer,List<PurchaseRecord>> patientMap = new HashMap<>();
+        for(PurchaseRecord currentRecord: purchaseRecords){
+            int currentPId=currentRecord.getPatientId();
+            if(patientMap.containsKey(currentPId)){
+                List<PurchaseRecord> list=patientMap.get(currentPId);
+                list.add(currentRecord);
+            }
+            else{
+                List<PurchaseRecord> list= new ArrayList<>();
+                list.add(currentRecord);
+                patientMap.put(currentPId,list);
+            }
+        }
 
         // then put real results in here
         AnalysisResult result = new AnalysisResult();

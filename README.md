@@ -60,7 +60,7 @@ Zip up the directory and send it to us.
 2. Get all the patient IDs and remove duplicates and store in an array
 3. Gather all patient's records per patient from data.csv
 4. Iterate through patients array  and pass patient's records to the categorize function.
-5. Categorize fuction steps:
+5. Categorize function steps:
     1. Sort by day.
     2. Suppose on 0 day current medicine is 'B'
     3. Goto next day (if medicine on next day is same as current day repeat step-3)
