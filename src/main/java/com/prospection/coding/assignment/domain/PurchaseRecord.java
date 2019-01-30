@@ -42,4 +42,5 @@ public class PurchaseRecord {
     public String toString() {
         return day + "," + medication + "," + patientId;
     }
+
 }
